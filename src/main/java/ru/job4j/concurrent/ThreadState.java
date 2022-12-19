@@ -12,6 +12,6 @@ public class ThreadState {
         second.start();
         while (first.isAlive() && second.isAlive()) {
         }
-        System.out.println("Finished");
+        System.out.println("First - " + first.getState() + System.lineSeparator() + "Second - " + second.getState());
     }
 }
