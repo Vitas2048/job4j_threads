@@ -1,18 +1,18 @@
 package ru.job4j.concurrent;
 
+
 public class ConsoleProgress implements Runnable {
+
+    private final char[] b =  {'/', '|', '\\', '|'};
+
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                System.out.print("\r loading: " + "\\");
-                Thread.sleep(500);
-                System.out.print("\r loading: " + "|");
-                Thread.sleep(500);
-                System.out.print("\r loading: " + "/");
-                Thread.sleep(500);
-                System.out.print("\r loading: " + "|");
-                Thread.sleep(500);
+                for (char a : b) {
+                    System.out.print("\r loading: " + a);
+                    Thread.sleep(500);
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
