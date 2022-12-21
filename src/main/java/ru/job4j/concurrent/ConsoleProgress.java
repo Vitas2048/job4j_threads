@@ -3,14 +3,14 @@ package ru.job4j.concurrent;
 
 public class ConsoleProgress implements Runnable {
 
-    private final char[] b =  {'/', '|', '\\', '|'};
+    private final char[] loadSymbols =  {'/', '|', '\\', '|'};
 
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                for (char a : b) {
-                    System.out.print("\r loading: " + a);
+                for (char symbol : loadSymbols) {
+                    System.out.print("\r loading: " + symbol);
                     Thread.sleep(500);
                 }
             } catch (InterruptedException e) {
