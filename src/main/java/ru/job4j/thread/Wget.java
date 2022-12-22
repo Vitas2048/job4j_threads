@@ -26,7 +26,7 @@ public class Wget implements Runnable {
             int bytesRead;
             while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
-                Thread.sleep(speed / 1000);
+                Thread.sleep((1024 / speed) * 1000);
             }
         } catch (IOException e) {
             e.printStackTrace();
