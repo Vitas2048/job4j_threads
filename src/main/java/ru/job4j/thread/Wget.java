@@ -10,20 +10,23 @@ public class Wget implements Runnable {
     private final String url;
     private final int speed;
 
-    public Wget(String url, int speed) {
+    private final String resultFile;
+
+    public Wget(String url, int speed, String resultFile) {
         this.url = url;
         this.speed = speed;
+        this.resultFile = resultFile;
     }
 
     @Override
     public void run() {
         try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream("pom_tmp.xml")) {
-            byte[] dataBuffer = new byte[speed];
+             FileOutputStream fileOutputStream = new FileOutputStream(resultFile)) {
+            byte[] dataBuffer = new byte[1024];
             int bytesRead;
-            while ((bytesRead = in.read(dataBuffer, 0, speed)) != -1) {
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
-                Thread.sleep(1000);
+                Thread.sleep(speed / 1000);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,19 +35,27 @@ public class Wget implements Runnable {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        if (args.length < 1) {
+    private static void validate(String[] arguments) {
+        if (arguments.length < 1) {
             throw new NoSuchElementException("Введите аргументы");
         }
-        String url = args[0];
-        int speed = Integer.parseInt(args[1]);
-        if (speed <= 0) {
+        if (Integer.parseInt(arguments[1]) <= 0) {
             throw new IllegalArgumentException("Скорость должна быть больше 0");
         }
-        if (!url.isEmpty() && !url.startsWith("https://")) {
+        if (!arguments[0].isEmpty() && !arguments[0].startsWith("https://")) {
             throw new IllegalArgumentException("Введите URL");
         }
-        Thread wget = new Thread(new Wget(url, speed));
+        if (!arguments[2].endsWith(".txt") && !arguments[2].endsWith(".xml")) {
+            throw new IllegalArgumentException("Введите имя файла");
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        validate(args);
+        String url = args[0];
+        String resultFile = args[2];
+        int speed = Integer.parseInt(args[1]);
+        Thread wget = new Thread(new Wget(url, speed, resultFile));
         wget.start();
         wget.join();
     }
