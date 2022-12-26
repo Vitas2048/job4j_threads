@@ -24,9 +24,18 @@ public class Wget implements Runnable {
              FileOutputStream fileOutputStream = new FileOutputStream(resultFile)) {
             byte[] dataBuffer = new byte[1024];
             int bytesRead;
+            int downloadData = 0;
+            long current;
             while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                fileOutputStream.write(dataBuffer, 0, bytesRead);
-                Thread.sleep((1024 / speed) * 1000);
+                long start = System.nanoTime();
+                downloadData += bytesRead;
+                if (downloadData >= speed) {
+                    if ((current = System.nanoTime() - start) < 1e+9) {
+                        Thread.sleep(1000 - current);
+                        downloadData = 0;
+                        fileOutputStream.write(dataBuffer, 0, bytesRead);
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
