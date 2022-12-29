@@ -1,10 +1,6 @@
-package ru.job4j.blockingqueue;
+package ru.job4j.buffer;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.lang.Thread.State;
 
 import static org.junit.jupiter.api.Assertions.*;
 
