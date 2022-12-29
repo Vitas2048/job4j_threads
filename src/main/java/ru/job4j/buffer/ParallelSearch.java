@@ -6,11 +6,12 @@ public class ParallelSearch {
         SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<Integer>();
         final Thread consumer = new Thread(
                 () -> {
-                    while (true) {
+                    while (!Thread.currentThread().isInterrupted()) {
                         try {
-                            System.out.println(queue.poll());
+                            var polled = queue.poll();
+                            System.out.println(polled);
                         } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
+                            Thread.currentThread().interrupt();
                         }
                     }
                 }
@@ -21,12 +22,12 @@ public class ParallelSearch {
                     for (int index = 0; index != 3; index++) {
                         queue.offer(index);
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
-                    consumer.stop();
+                    consumer.interrupt();
                 }
 
         ).start();
