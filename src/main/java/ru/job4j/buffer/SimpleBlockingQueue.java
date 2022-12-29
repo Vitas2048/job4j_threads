@@ -9,7 +9,7 @@ import java.util.Queue;
 @ThreadSafe
 public class SimpleBlockingQueue<T> {
 
-    private final int qSize = 1;
+    private final int qSize = 7;
 
     @GuardedBy("this")
     private Queue<T> queue = new LinkedList<>();
@@ -28,5 +28,9 @@ public class SimpleBlockingQueue<T> {
         T rsl = queue.poll();
         notifyAll();
         return rsl;
+    }
+
+    public synchronized boolean isEmpty() {
+        return queue.size() == 0;
     }
 }
