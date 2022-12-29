@@ -16,11 +16,10 @@ public class CountBarrier {
         this.notifyAll();
     }
 
-
     public synchronized void await() {
         while (count <= total) {
             try {
-                this.wait();
+                monitor.wait();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
