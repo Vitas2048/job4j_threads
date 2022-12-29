@@ -31,7 +31,7 @@ public class Wget implements Runnable {
                 downloadData += bytesRead;
                 if (downloadData >= speed) {
                     if ((current = System.nanoTime() - start) < 1e+9) {
-                        Thread.sleep(1000 - current);
+                        Thread.sleep((long) (1000 - current * 1e-6));
                     }
                     downloadData = 0;
                     start = System.nanoTime();
