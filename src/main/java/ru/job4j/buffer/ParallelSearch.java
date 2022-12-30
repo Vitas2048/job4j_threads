@@ -33,6 +33,7 @@ public class ParallelSearch {
                     }
                 }
         ).start();
+        consumer.join(3000);
         consumer.interrupt();
     }
 }
