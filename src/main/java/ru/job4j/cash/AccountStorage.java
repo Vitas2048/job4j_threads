@@ -31,15 +31,13 @@ public class AccountStorage {
     public synchronized boolean transfer(int fromId, int toId, int amount) {
         var fromAccount = getById(fromId);
         var toAccount = getById(toId);
-        if (fromAccount.isPresent() && toAccount.isPresent()) {
-            if (fromAccount.get().amount() >= amount) {
+        if (fromAccount.isPresent() && toAccount.isPresent() && fromAccount.get().amount() >= amount) {
                 Account newFrom = new Account(fromId, fromAccount.get().amount() - amount);
                 Account newTo = new Account(toId, toAccount.get().amount() + amount);
                 update(newFrom);
                 update(newTo);
                 return true;
             }
-        }
         return false;
     }
 }
