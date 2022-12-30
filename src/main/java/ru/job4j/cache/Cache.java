@@ -10,8 +10,6 @@ public class Cache {
         return memory.putIfAbsent(model.getId(), model) == null;
     }
 
- //
- //   model.getVersion() != i.getVersion()
     public boolean update(Base model) {
         return memory.computeIfPresent(model.getId(), (s, i) -> {
             if (i.getVersion() != model.getVersion()) {
