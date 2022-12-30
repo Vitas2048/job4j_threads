@@ -9,21 +9,26 @@ import java.util.Queue;
 @ThreadSafe
 public class SimpleBlockingQueue<T> {
 
-    private final int qSize = 7;
+    private final int qSize;
 
     @GuardedBy("this")
     private Queue<T> queue = new LinkedList<>();
 
-    public synchronized void offer(T value) {
-        if (qSize > queue.size()) {
-            queue.offer(value);
-            this.notifyAll();
+    public SimpleBlockingQueue(int qSize) {
+        this.qSize = qSize;
+    }
+
+    public synchronized void offer(T value) throws InterruptedException {
+        while (qSize == queue.size()) {
+            this.wait();
         }
+        queue.offer(value);
+        this.notifyAll();
     }
 
     public synchronized T poll() throws InterruptedException {
         while (queue.size() == 0) {
-            wait();
+            this.wait();
         }
         T rsl = queue.poll();
         notifyAll();
