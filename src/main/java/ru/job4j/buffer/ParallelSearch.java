@@ -2,7 +2,7 @@ package ru.job4j.buffer;
 
 public class ParallelSearch {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<Integer>(5);
         final Thread consumer = new Thread(
                 () -> {
@@ -31,9 +31,8 @@ public class ParallelSearch {
                             e.printStackTrace();
                         }
                     }
-                    consumer.interrupt();
                 }
-
         ).start();
+        consumer.interrupt();
     }
 }
