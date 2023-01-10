@@ -39,8 +39,17 @@ class ParallelSearchTest {
         for (int i = 0; i < 110; i++) {
             numbers[i] = String.valueOf(i);
         }
-        ParallelSearch search = new ParallelSearch(numbers, "105");
-        assertEquals(105, search.compute());
+        ParallelSearch search = new ParallelSearch(numbers, "17");
+        assertEquals(17, search.compute());
+    }
+    @Test
+    public void whenParallelSearchThen18() {
+        String[] numbers = new String[110];
+        for (int i = 0; i < 110; i++) {
+            numbers[i] = String.valueOf(i);
+        }
+        ParallelSearch search = new ParallelSearch(numbers, "97");
+        assertEquals(97, search.compute());
     }
 
     @Test
@@ -49,9 +58,7 @@ class ParallelSearchTest {
         for (int i = 0; i < 24; i++) {
             numbers[i] = String.valueOf(i);
         }
-        ParallelSearch search = new ParallelSearch(numbers, "1asdwd");
-        NoSuchElementException exception = assertThrows(
-                NoSuchElementException.class,
-                search::compute);
+        ParallelSearch search = new ParallelSearch(numbers, "97");
+        assertEquals(0, search.compute());
     }
 }

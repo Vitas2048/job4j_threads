@@ -3,7 +3,6 @@ package ru.job4j.parallelsearch;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.concurrent.RecursiveTask;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ParallelSearch extends RecursiveTask<Integer> {
 
@@ -17,23 +16,26 @@ public class ParallelSearch extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
+        int res = array.length / 2;
+        boolean find = false;
         if (array.length > 10) {
             ParallelSearch left = new ParallelSearch(Arrays.copyOfRange(array, 0, array.length / 2), search);
             ParallelSearch right = new ParallelSearch(Arrays.copyOfRange(array, array.length / 2, array.length), search);
             left.fork();
             right.fork();
-            if (right.join() == 0 && left.join() != 0) {
-               return left.join();
-            }
+            res += right.join();
             if (left.join() == 0 && right.join() != 0) {
-                return left.join() + right.join();
+                return res;
             }
+            res = left.join();
+            return res;
         }
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(search)) {
-                return i;
+                res = i;
+                return res;
             }
         }
-        throw new NoSuchElementException();
+        return 0;
     }
 }
