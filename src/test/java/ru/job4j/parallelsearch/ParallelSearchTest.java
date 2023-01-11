@@ -18,7 +18,7 @@ class ParallelSearchTest {
         User user2 = new User("Vlayd", "Ya");
         User user3 = new User("Nik", "rambler");
         User[] users = {user1, user2, user3};
-        ParallelSearch search = new ParallelSearch(users, user2);
+        ParallelSearch search = new ParallelSearch(users, user2, 0, 2);
         assertEquals(1, search.compute());
     }
     @Test
@@ -29,7 +29,7 @@ class ParallelSearchTest {
         String s3 = "Holidays";
         String s4 = "!!!!";
         String[] congrats = {s, s2, s3, s1, s4};
-        ParallelSearch search = new ParallelSearch(congrats, "Holidays");
+        ParallelSearch search = new ParallelSearch(congrats, "Holidays", 0, 4);
         assertEquals(2, search.compute());
     }
 
@@ -39,7 +39,7 @@ class ParallelSearchTest {
         for (int i = 0; i < 110; i++) {
             numbers[i] = String.valueOf(i);
         }
-        ParallelSearch search = new ParallelSearch(numbers, "17");
+        ParallelSearch search = new ParallelSearch(numbers, "17", 0, 109);
         assertEquals(17, search.compute());
     }
     @Test
@@ -48,8 +48,8 @@ class ParallelSearchTest {
         for (int i = 0; i < 110; i++) {
             numbers[i] = String.valueOf(i);
         }
-        ParallelSearch search = new ParallelSearch(numbers, "97");
-        assertEquals(97, search.compute());
+        ParallelSearch search = new ParallelSearch(numbers, "18", 0, 109);
+        assertEquals(18, search.compute());
     }
 
     @Test
@@ -58,7 +58,7 @@ class ParallelSearchTest {
         for (int i = 0; i < 24; i++) {
             numbers[i] = String.valueOf(i);
         }
-        ParallelSearch search = new ParallelSearch(numbers, "97");
+        ParallelSearch search = new ParallelSearch(numbers, "97", 0 , 23);
         assertEquals(0, search.compute());
     }
 }

@@ -8,32 +8,37 @@ public class ParallelSearch extends RecursiveTask<Integer> {
 
     private final Object[] array;
 
+    private final int from;
+
+    private final int to;
+
     private final Object search;
-    public ParallelSearch(Object[] array, Object search) {
+
+    public ParallelSearch(Object[] array, Object search, int from, int to) {
         this.array = array;
         this.search = search;
+        this.to = to;
+        this.from = from;
     }
 
     @Override
     protected Integer compute() {
-        int res = array.length / 2;
-        boolean find = false;
-        if (array.length > 10) {
-            ParallelSearch left = new ParallelSearch(Arrays.copyOfRange(array, 0, array.length / 2), search);
-            ParallelSearch right = new ParallelSearch(Arrays.copyOfRange(array, array.length / 2, array.length), search);
+        if (to - from > 10) {
+            ParallelSearch left = new ParallelSearch(array, search, from, to / 2);
+            ParallelSearch right = new ParallelSearch(array, search, to / 2, to - 1);
             left.fork();
             right.fork();
-            res += right.join();
-            if (left.join() == 0 && right.join() != 0) {
-                return res;
+            if (left.join() != 0) {
+                return left.join();
             }
-            res = left.join();
-            return res;
+            if (right.join() != 0) {
+                return right.join();
+            }
+            return 0;
         }
-        for (int i = 0; i < array.length; i++) {
+        for (int i = from; i < to; i++) {
             if (array[i].equals(search)) {
-                res = i;
-                return res;
+                return i;
             }
         }
         return 0;
