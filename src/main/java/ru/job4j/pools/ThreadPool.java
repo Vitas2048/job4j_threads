@@ -1,6 +1,5 @@
-package ru.job4j.pool;
+package ru.job4j.pools;
 
-import org.junit.experimental.theories.Theories;
 import ru.job4j.buffer.SimpleBlockingQueue;
 
 import java.util.LinkedList;

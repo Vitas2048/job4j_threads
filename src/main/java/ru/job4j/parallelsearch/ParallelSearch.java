@@ -38,7 +38,7 @@ public class ParallelSearch extends RecursiveTask<Integer> {
         }
         for (int i = from; i < to; i++) {
             if (array[i].equals(search)) {
-                return i;
+                return i + 1;
             }
         }
         return 0;
