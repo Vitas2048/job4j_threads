@@ -59,6 +59,6 @@ class ParallelSearchTest {
             numbers[i] = String.valueOf(i);
         }
         ParallelSearch search = new ParallelSearch(numbers, "97", 0 , 23);
-        assertEquals(0, search.compute());
+        assertEquals(-1, search.compute());
     }
 }
