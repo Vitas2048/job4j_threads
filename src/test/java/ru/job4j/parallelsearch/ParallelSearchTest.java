@@ -18,8 +18,7 @@ class ParallelSearchTest {
         User user2 = new User("Vlayd", "Ya");
         User user3 = new User("Nik", "rambler");
         User[] users = {user1, user2, user3};
-        ParallelSearch search = new ParallelSearch(users, user2, 0, 2);
-        assertEquals(1, search.compute());
+        assertEquals(1, ParallelSearch.parallelFind(users, user2));
     }
     @Test
     public void whenStringThen2() {
@@ -29,8 +28,7 @@ class ParallelSearchTest {
         String s3 = "Holidays";
         String s4 = "!!!!";
         String[] congrats = {s, s2, s3, s1, s4};
-        ParallelSearch search = new ParallelSearch(congrats, "Holidays", 0, 4);
-        assertEquals(2, search.compute());
+        assertEquals(2, ParallelSearch.parallelFind(congrats, "Holidays"));
     }
 
     @Test
@@ -39,8 +37,7 @@ class ParallelSearchTest {
         for (int i = 0; i < 110; i++) {
             numbers[i] = String.valueOf(i);
         }
-        ParallelSearch search = new ParallelSearch(numbers, "17", 0, 109);
-        assertEquals(17, search.compute());
+        assertEquals(17, ParallelSearch.parallelFind(numbers, "17"));
     }
     @Test
     public void whenParallelSearchThen18() {
@@ -48,8 +45,7 @@ class ParallelSearchTest {
         for (int i = 0; i < 110; i++) {
             numbers[i] = String.valueOf(i);
         }
-        ParallelSearch search = new ParallelSearch(numbers, "18", 0, 109);
-        assertEquals(18, search.compute());
+        assertEquals(18, ParallelSearch.parallelFind(numbers, "18"));
     }
 
     @Test
@@ -58,7 +54,15 @@ class ParallelSearchTest {
         for (int i = 0; i < 24; i++) {
             numbers[i] = String.valueOf(i);
         }
-        ParallelSearch search = new ParallelSearch(numbers, "97", 0 , 23);
-        assertEquals(0, search.compute());
+        assertEquals(-1, ParallelSearch.parallelFind(numbers, 97));
+    }
+
+    @Test
+    public void whenParallelSearchLastThen109() {
+        String[] numbers = new String[110];
+        for (int i = 0; i < 110; i++) {
+            numbers[i] = String.valueOf(i);
+        }
+        assertEquals(109, ParallelSearch.parallelFind(numbers, "109"));
     }
 }
