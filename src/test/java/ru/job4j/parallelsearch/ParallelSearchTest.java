@@ -56,4 +56,13 @@ class ParallelSearchTest {
         }
         assertEquals(-1, ParallelSearch.parallelFind(numbers, 97));
     }
+
+    @Test
+    public void whenParallelSearchLastThen109() {
+        String[] numbers = new String[110];
+        for (int i = 0; i < 110; i++) {
+            numbers[i] = String.valueOf(i);
+        }
+        assertEquals(109, ParallelSearch.parallelFind(numbers, "109"));
+    }
 }
